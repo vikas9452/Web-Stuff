@@ -1,0 +1,103 @@
+<!-- Created by COMPUTER DUDE-->
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Happy Holi</title>
+<style>
+p {
+    font-size: 20pt;
+    font-family: Cursive;
+    font-weight: bolder;
+    -webkit-animation: shadowchange 2s infinite, changetxtcolor 3s infinite;
+}
+
+body{
+    -webkit-animation:  10s infinite;
+}
+
+@-webkit-keyframes shadowchange{
+    0%,100% {text-shadow: 2pt 2pt 2pt red,2pt -2pt 2pt green,-2pt 2pt 2pt blue,-2pt -2pt 2pt yellow;}
+    25% {text-shadow: 2pt 2pt 2pt green,2pt -2pt 2pt magenta,-2pt 2pt 2pt gold,-2pt -2pt 2pt purple;}
+    50% {text-shadow: 2pt 2pt 2pt orange,2pt -2pt 2pt red,-2pt 2pt 2pt magenta,-2pt -2pt 2pt blue;}
+    75% {text-shadow: 2pt 2pt 2pt blue,2pt -2pt 2pt purple,-2pt 2pt 2pt cyan,-2pt -2pt 2pt magenta;}
+}
+
+@-webkit-keyframes changebgcolor{
+    0%,100% {background-color: green;}
+    20% {background-color: orange;}
+    40% {background-color: red;}
+    60% {background-color: cyan;}
+    80% {background-color: yellow;}
+}
+
+@-webkit-keyframes changetxtcolor{
+    0%,100% {color: orange;}
+    20% {color: gold;}
+    40% {color: magenta;}
+    60% {color: red;}
+    80% {color: lightgreen;}
+}
+</style>
+<script>
+// Created by COMPUTER DUDE
+
+var x,y,rad=50,rmax,cnv,ctx,a,c
+
+function splash1()
+{
+    ctx.beginPath()
+    ctx.arc(x,y,rad,0,2*Math.PI)
+    ctx.closePath()
+    switch(a)
+    {
+        case 0: col="rgba(200,0,0,.075)"; break;
+        case 1: col="rgba(0,200,0,.075)"; break;
+        case 2: case 3: col="rgba(150,150,0,.1)"; break;
+        case 4: case 5: case 6: col="rgba(200,0,200,0.1)"; break;
+        case 7: col="rgba(150,50,150,.125)"; break;
+        case 8: case 9: col="rgba(0,0,128,0.125)"; break;
+    }
+    ctx.fillStyle=col
+    ctx.fill()
+    ctx.strokeStyle=col
+    ctx.stroke()
+    rad+=5
+    if(rad>=rmax)
+    {
+        rad=50
+        clearInterval(c)
+    }
+}
+
+function splash(event)
+{
+    if(c!=null)
+        clearInterval(c)
+    x=event.x-cnv.offsetLeft
+    y=event.y-cnv.offsetTop
+    rmax = 50 + Math.floor(Math.random()*50)
+    a = Math.floor(Math.random()*10)
+    c=setInterval(splash1,50)
+}
+
+window.onload = function()
+{
+    cnv = document.getElementById("holi")
+    ctx = cnv.getContext("2d")
+    ctx.beginPath()
+    ctx.rect(0,0,340,400)
+    ctx.closePath()
+    ctx.fillStyle="pink"
+    ctx.fill()
+    cnv.addEventListener("mousedown",splash,false)
+}
+</script>
+</head>
+    <body bgcolor = "pink">
+    <center>
+    <p>Happy Holi<br>Click below to get suprise</p>
+        <canvas id=holi width=340 height=400/>
+    </center>
+    </body>
+</html>

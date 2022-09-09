@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Mathematical Flowers</title>
+        <!-- Font -->
+        <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+		<style>
+		
+		* {
+   overflow: hidden;
+   font-family: 'Ubuntu', sans-serif;
+}
+
+body {
+    background-color: #235;
+}
+
+p {
+    position: absolute;
+    color: white;
+    font-size: 3vh;
+    left: 40%;
+    margin-top: 1%;
+}
+
+p:nth-of-type(3) {
+    top: 92%;
+    left: 4%;
+}
+
+p:nth-of-type(5) {
+    top: 87%;
+}
+
+p:nth-of-type(6) {
+    top: 92%;
+}
+
+#d {
+    top: 87%;
+    left: 4%;
+}
+
+#n {
+    top:82%;
+    left: 4%;
+}
+
+#k {
+    top: 82%;
+}
+
+canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-bottom: 3px double #568;
+    background-color: #013;
+}
+
+#wm {
+    display:inline-block;
+    color: white;
+    margin-top:1%;
+    padding-left:100%;
+    animation:move 8s linear infinite;
+}
+
+@keyframes move {
+    from { transform:translate(0, 0);}
+	20% {color: pink; text-shadow:3px 6px 5px red;}
+	40% {color: red; text-shadow:3px 4px 3px yellow;}
+	60% {color: green; text-shadow:3px 2px 3px blue;}
+	80% {color: gray; text-shadow:6px 4px 2px pink;}
+    to { transform:translate(-100%, 0);}
+}
+		</style>
+		<script>
+		var canvas, g, iv, angle = 0, d, n, scale, lastK;
+
+onload = function() {
+  canvas = document.getElementsByTagName("canvas")[0];
+  canvas.width  = window.innerWidth;
+  canvas.height = window.innerHeight * 0.8;
+ 
+  scale = canvas.width < canvas.height ? canvas.width / 3 : canvas.height / 3;
+ 
+  g = canvas.getContext("2d");
+  g.translate(canvas.width / 2, canvas.height / 2);
+  g.strokeStyle = "white";
+ 
+  canvas.onclick = start;
+ 
+  start();
+}
+
+function start() {
+  d = Math.floor(Math.random() * 14) + 1;
+  n = Math.floor(Math.random() * 20) + 1;
+ 
+  var k = n / d;
+ 
+  if(k == 1 || lastK == k) {
+      start();
+      return;
+  }
+ 
+  g.clearRect(-canvas.width / 2, -canvas.height / 2, canvas.width, canvas.height);
+  g.beginPath();
+ 
+  var string = k % 1 === 0 ? k : n +"/"+ d;
+ 
+  for(var i = 2; i < 10; i++) {
+      if((n / i) % 1 === 0 && (d / i) % 1 === 0)
+      string = ((n / i) + "/" + (d / i));
+  }
+ 
+  document.getElementById("d").innerHTML = "d = " + d;
+  document.getElementById("n").innerHTML = "n = " + n;
+  document.getElementById("k").innerHTML = "k = " + string;
+ 
+  iv = setInterval(draw, 5);
+}
+
+function draw() {
+  var k = n / d;
+   
+  var x = Math.cos(k * angle) * Math.cos(angle) * scale;
+  var y = Math.cos(k * angle) * Math.sin(angle) * scale;
+ 
+  g.lineTo(x, y);
+  g.stroke();
+ 
+  if(angle > Math.PI * d * n * 2) {
+      lastK = k;
+      clearInterval(iv);
+  }
+ 
+  angle += Math.PI / 100;
+}
+		</script>
+    </head>
+    <body>
+        <canvas></canvas>
+        <p id="n">n = 1</p>
+        <p id="d">d = 1</p>
+        <p>k = n / d</p>
+        <p id="k">k = 1/1</p>
+        <p>x = cos(k * θ) * cos(θ)</p>
+        <p>y = cos(k * θ) * sin(θ)</p>
+        <pre id="wm">Tap to generate a different flower [Created by: VIKAS CAHAHAL]</pre>
+    </body>
+</html>
+
+
+
